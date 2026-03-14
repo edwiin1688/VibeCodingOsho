@@ -5,12 +5,14 @@ import random
 from datetime import datetime, timezone
 from functools import lru_cache
 
-import redis
+from dotenv import load_dotenv
 from flask import Flask, render_template, session, redirect, url_for, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from flask_session import Session
 from flask_wtf.csrf import CSRFProtect
+
+# 載入 .env 檔案
+load_dotenv()
 
 
 def create_app(test_config: dict | None = None) -> Flask:
@@ -24,18 +26,11 @@ def create_app(test_config: dict | None = None) -> Flask:
     )
     logger = logging.getLogger("vibecodingosho")
 
-    redis_url = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
-    app.config["SESSION_TYPE"] = "redis"
-    app.config["SESSION_PERMANENT"] = False
-    app.config["SESSION_USE_SIGNER"] = True
-    app.config["SESSION_KEY_PREFIX"] = "vibecodingosho:"
-    app.config["SESSION_REDIS"] = redis.from_url(redis_url)
-    Session(app)
-
     secret_key = os.environ.get("FLASK_SECRET_KEY")
     if not secret_key:
         raise ValueError("FLASK_SECRET_KEY 環境變數未設定，請設定後再啟動應用程式")
     app.secret_key = secret_key
+
     csrf = CSRFProtect(app)
     limiter = Limiter(
         app=app,
@@ -144,8 +139,10 @@ app = create_app()
 
 if __name__ == "__main__":
     debug_mode = os.environ.get("FLASK_DEBUG", "false").lower() in ("1", "true", "yes")
+    # 使用 threaded=False 避免多線程問題
     app.run(
         host="127.0.0.1",
         port=int(os.environ.get("PORT", 5000)),
         debug=debug_mode,
+        threaded=False,
     )

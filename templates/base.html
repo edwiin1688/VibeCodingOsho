@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="奧修禪卡線上占卜 - 在當下，讓卡牌映照你的內在狀態，帶來清明與指引。" />
     <meta name="author" content="VibeCodingOsho" />
-    <meta name="theme-color" content="#0f172a" />
+    <meta name="theme-color" content="#09090b" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <title>{% block title %}奧修禪卡線上占卜{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    {% block head %}{% endblock %}
   </head>
   <body>
     <header class="site-header" role="banner">
       <nav class="nav" role="navigation" aria-label="主要導航">
-        <a href="{{ url_for('index') }}" class="brand">奧修禪卡</a>
+        <a href="{{ url_for('index') }}" class="brand" aria-label="返回首頁">奧修禪卡</a>
         <div class="links">
           <a href="{{ url_for('index') }}">首頁</a>
           <a href="{{ url_for('history') }}">歷史記錄</a>
@@ -28,6 +31,4 @@
       <p>© {{ current_year }} VibeCodingOsho · 以覺察、臨在、喜悅為指南</p>
     </footer>
   </body>
-  </html>
-
-
+</html>

@@ -1,97 +1,1017 @@
+/* ═══════════════════════════════════════════
+   💡 概念：Design Token 設計系統
+   說明：使用 CSS 變數定義創作主題與色彩，確保一致性與可維護性
+   為何使用：便於統一調整與自定義主題
+   ═══════════════════════════════════════════ */
+
 :root {
-  --bg: #0f172a;
-  --panel: #111827;
-  --fg: #e5e7eb;
-  --muted: #94a3b8;
-  --primary: #a78bfa;
-  --primary-contrast: #0b1020;
-  --border: #1f2937;
+  /* 色彩系統 - 新神秘主義風格 */
+  --bg-primary: #09090b;
+  --bg-panel: #18181b;
+  --bg-overlay: rgba(24, 24, 27, 0.85);
+  --text-main: #e4e4e7;
+  --text-muted: #a1a1aa;
+  --text-secondary: #737373;
+  --border subtle: #27272a;
+  --primary: #c4b5fd;
+  --primary-glow: rgba(196, 181, 253, 0.25);
+  --accent: #fb7185;
+  --accent-glow: rgba(251, 113, 133, 0.2);
+  --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(196, 181, 253, 0.15);
 }
 
-* { box-sizing: border-box; }
-html, body { height: 100%; }
+/* ═══════════════════════════════════════════
+   💡 概念：CSS Reset
+   說明：統一瀏覽器預設樣式，確保跨瀏覽器一致性
+   ═══════════════════════════════════════════ */
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--fg);
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  line-height: 1.6;
+  padding: 0;
+  background: var(--bg-primary);
+  /* 背景微紋理 - 極低透明度 graded 渐层模擬星空 */
+  background-image:
+    radial-gradient(at 0% 0%, rgba(196, 181, 253, 0.03) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(251, 113, 133, 0.02) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(196, 181, 253, 0.02) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(251, 113, 133, 0.02) 0px, transparent 50%);
+  color: var(--text-main);
+  font-family: "PingFang TC", "Microsoft JhengHei", "Songti TC", "STSong", "楷体", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.8;
   font-size: 16px;
+  -webkit-text-size-adjust: 100%;
 }
 
+/* ═══════════════════════════════════════════
+   💡 概念：導航系統
+   說明：頂部导航使用毛玻璃效果，提供輕盈懸浮感
+   ═══════════════════════════════════════════ */
 .site-header {
-  border-bottom: 1px solid var(--border);
-  background: rgba(17, 24, 39, 0.7);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-overlay);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   position: sticky;
   top: 0;
-  backdrop-filter: blur(6px);
+  z-index: 100;
+  transition: all 0.3s ease;
 }
+
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   max-width: 960px;
   margin: 0 auto;
-  padding: 12px 16px;
+  padding: 16px 24px;
+  transition: padding 0.3s ease;
 }
-.nav .brand { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 1.1rem; }
-.nav .links a { color: var(--muted); text-decoration: none; margin-left: 16px; font-size: 0.95rem; }
-.nav .links a:hover { color: var(--fg); }
 
-.container { max-width: 960px; margin: 24px auto; padding: 0 16px; }
-.hero { text-align: center; padding: 48px 16px; }
-.hero h1 { margin: 0 0 8px; font-size: 28px; }
-.hero p { margin: 0 auto 24px; color: var(--muted); max-width: 680px; font-size: 1rem; }
+.nav .brand {
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+  position: relative;
+  padding-bottom: 2px;
+}
 
+.nav .brand::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width 0.3s ease;
+}
+
+.nav .brand:hover::after {
+  width: 100%;
+}
+
+.nav .links {
+  display: flex;
+  gap: 8px;
+}
+
+.nav .links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav .links a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(196, 181, 253, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.nav .links a:hover {
+  color: var(--text-main);
+  background: rgba(196, 181, 253, 0.05);
+}
+
+.nav .links a:hover::before {
+  left: 100%;
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：容器與佈局
+   說明：中間容器確保內容可讀性與視覺平衡
+   ═══════════════════════════════════════════ */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  min-height: calc(100vh - 200px);
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：英雄區 - 儀式感入口
+   說明：首頁入口區域，營造臨界轉換空間
+   ═══════════════════════════════════════════ */
+.hero {
+  text-align: center;
+  padding: 80px 24px;
+  position: relative;
+}
+
+.hero h1 {
+  margin: 0 0 16px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--text-main) 0%, var(--primary) 50%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  margin: 0 auto 48px;
+  color: var(--text-muted);
+  max-width: 680px;
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：按鈕系統 - 呼吸式交互
+   說明：所有按鈕具備 soft shadow 與 glow 效果
+   ═══════════════════════════════════════════ */
 .btn {
-  display: inline-block;
-  padding: 12px 20px;
-  border-radius: 8px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  color: var(--fg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 16px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
   text-decoration: none;
   font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  gap: 8px;
 }
-.btn:hover { border-color: var(--muted); }
-.btn-primary { background: var(--primary); color: var(--primary-contrast); border-color: transparent; }
-.btn-primary:hover { filter: brightness(1.05); }
-.btn-secondary { background: #334155; }
-.btn-link { background: transparent; border: none; color: var(--muted); }
 
-.card { border: 1px solid var(--border); background: var(--panel); border-radius: 12px; padding: 16px; }
-.card-meta { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: baseline; }
-.card-name { font-weight: 700; font-size: 18px; }
-.card-suit, .card-key, .card-time { color: var(--muted); font-size: 12px; }
-.card-meaning { margin-top: 12px; color: var(--fg); white-space: pre-wrap; }
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transition: left 0.5s ease;
+}
 
-.history-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
-.history-item { border: 1px solid var(--border); background: var(--panel); border-radius: 12px; padding: 12px; }
-.history-item .meta { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
-.history-item .name { font-weight: 600; }
-.history-item .suit, .history-item .key, .history-item .time { color: var(--muted); font-size: 12px; }
+.btn:hover::before {
+  left: 100%;
+}
 
-.site-footer { border-top: 1px solid var(--border); color: var(--muted); text-align: center; padding: 24px 16px; margin-top: 48px; }
+.btn:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px var(--primary-glow);
+}
 
+.btn:active {
+  transform: translateY(0);
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, #a78bfa 100%);
+  color: var(--bg-primary);
+  border: none;
+  box-shadow: 0 4px 16px -2px var(--primary-glow);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 8px 24px -4px var(--primary-glow);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary {
+  background: var(--bg-panel);
+  border-color: var(--border-subtle);
+  color: var(--text-main);
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent);
+  box-shadow: 0 8px 20px -4px var(--accent-glow);
+}
+
+.btn-link {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 8px 16px;
+}
+
+.btn-link:hover {
+  color: var(--primary);
+  background: rgba(196, 181, 253, 0.05);
+  transform: none;
+  box-shadow: none;
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：內容區塊
+   說明：段落與列表的視覺層級
+   ═══════════════════════════════════════════ */
+.intro {
+  margin-top: 64px;
+  padding: 32px;
+  background: var(--bg-panel);
+  border-radius: 24px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-soft);
+}
+
+.intro h2 {
+  margin: 0 0 24px;
+  font-size: 1.5rem;
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.intro ol {
+  margin: 0;
+  padding-left: 24px;
+  display: grid;
+  gap: 16px;
+}
+
+.intro li {
+  color: var(--text-main);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  padding-left: 16px;
+  position: relative;
+}
+
+.intro li::before {
+  content: '•';
+  position: absolute;
+  left: -16px;
+  color: var(--primary);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：卡牌系統 - 核心組件
+   說明：結果頁的卡牌具備懸浮光暈與深層次layer
+   ═══════════════════════════════════════════ */
+.card {
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-panel);
+  border-radius: 24px;
+  padding: 40px 32px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+  border-color: rgba(196, 181, 253, 0.3);
+}
+
+.card-meta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: baseline;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.card-name {
+  font-weight: 600;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  font-family: "STSong", "Songti TC", "楷体", serif;
+}
+
+.card-suit,
+.card-key,
+.card-time {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.card-suit::before,
+.card-key::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: var(--primary);
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.card-meaning {
+  color: var(--text-main);
+  white-space: pre-wrap;
+  font-size: 1.125rem;
+  line-height: 1.9;
+  font-family: "Lora", "Georgia", "Songti TC", serif;
+}
+
+.card-meaning p {
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：操作區
+   說明：按鈕組使用間距與分隔營造節奏感
+   ═══════════════════════════════════════════ */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+  justify-content: center;
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：歷史記錄 - 散落式設計
+   說明：歷史項目採用不規則間距，營造MEMORY散落感
+   ═══════════════════════════════════════════ */
+.history {
+  margin-top: 48px;
+}
+
+.history h1 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  margin: 0 0 32px;
+  color: var(--text-main);
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 20px;
+}
+
+.history-item {
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-panel);
+  border-radius: 20px;
+  padding: 24px;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.history-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), transparent);
+  opacity: 0.5;
+}
+
+.history-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-soft);
+}
+
+.history-item .meta {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.history-item .name {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--text-main);
+  font-family: "STSong", "Songti TC", "楷体", serif;
+}
+
+.history-item .suit,
+.history-item .key,
+.history-item .time {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.history-item .meaning {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.history-item .time {
+  margin-left: auto;
+}
+
+/* 無記錄狀態 */
+.empty-state {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--text-muted);
+}
+
+.empty-state p {
+  font-size: 1.25rem;
+  margin: 0 0 16px;
+}
+
+.empty-state .icon {
+  font-size: 4rem;
+  margin-bottom: 24px;
+  opacity: 0.3;
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：頁腳
+   說明：低調收尾，傳達核心價值
+   ═══════════════════════════════════════════ */
+.site-footer {
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 48px 24px;
+  margin-top: 80px;
+  background: linear-gradient(to top, var(--bg-primary) 0%, transparent 100%);
+}
+
+.site-footer p {
+  margin: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.site-footer::before {
+  content: '✦';
+  display: block;
+  font-size: 1.5rem;
+  color: var(--primary);
+  opacity: 0.5;
+  margin-bottom: 16px;
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：錯誤頁面
+   說明：維持一致的視覺語言於錯誤狀態
+   ═══════════════════════════════════════════ */
+.error-page {
+  text-align: center;
+  padding: 80px 24px;
+}
+
+.error-code {
+  font-size: clamp(4rem, 8vw, 8rem);
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 24px;
+  line-height: 1;
+  font-family: "STSong", "Songti TC", serif;
+}
+
+.error-message {
+  font-size: 1.5rem;
+  color: var(--text-main);
+  margin: 0 0 48px;
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：響應式設計 - 移動優先
+   說明：確保相機以內的導覽體驗，同時放大關鍵資訊
+   ═══════════════════════════════════════════ */
 @media (max-width: 640px) {
-  .nav { padding: 10px 12px; }
-  .nav .brand { font-size: 1rem; }
-  .nav .links a { margin-left: 12px; font-size: 0.875rem; }
-  
-  .container { padding: 0 12px; }
-  .hero { padding: 32px 12px; }
-  .hero h1 { font-size: 24px; }
-  .hero p { font-size: 0.95rem; }
-  
-  .btn { padding: 10px 16px; font-size: 0.95rem; }
-  
-  .card { padding: 12px; }
-  .card-name { font-size: 16px; }
-  
-  .history-item { padding: 10px; }
-  .history-item .name { font-size: 0.95rem; }
-  
-  .site-footer { padding: 20px 12px; margin-top: 32px; font-size: 0.875rem; }
+  .nav {
+    padding: 12px 16px;
+    gap: 8px;
+  }
+
+  .nav .brand {
+    font-size: 1.1rem;
+  }
+
+  .nav .links {
+    display: none;
+  }
+
+  .container {
+    padding: 32px 16px;
+  }
+
+  .hero {
+    padding: 64px 16px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+
+  .hero p {
+    font-size: 1rem;
+    margin-bottom: 32px;
+  }
+
+  .intro {
+    padding: 24px 20px;
+  }
+
+  .intro h2 {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+  }
+
+  .intro li {
+    font-size: 1rem;
+    padding-left: 12px;
+  }
+
+  .intro li::before {
+    font-size: 1.25rem;
+  }
+
+  .card {
+    padding: 24px 16px;
+    border-radius: 20px;
+  }
+
+  .card-meta {
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+  }
+
+  .card-name {
+    font-size: 1.5rem;
+  }
+
+  .card-suit,
+  .card-key,
+  .card-time {
+    font-size: 0.8rem;
+  }
+
+  .card-meaning {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 12px 20px;
+  }
+
+  .history-item {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .history-item .name {
+    font-size: 1.125rem;
+  }
+
+  .history-item .meaning {
+    font-size: 0.95rem;
+  }
+
+  .site-footer {
+    padding: 32px 16px;
+    margin-top: 48px;
+  }
+
+  .site-footer p {
+    font-size: 0.9rem;
+  }
 }
 
+/* ═══════════════════════════════════════════
+   💡 概念：平板優化
+   說明：中等螢幕採用中間值設定
+   ═══════════════════════════════════════════ */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .container {
+    padding: 40px 24px;
+  }
 
+  .hero {
+    padding: 72px 24px;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .card {
+    padding: 32px 24px;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：動畫關鍵帧
+   說明：為元素添加微妙的動態生命感
+   ═══════════════════════════════════════════ */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: var(--shadow-glow);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(196, 181, 253, 0.25);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* 幫助 class */
+.animated-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animated-glow {
+  animation: glow-pulse 4s ease-in-out infinite;
+}
+
+.animated-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s infinite;
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：結果頁擴展樣式
+   說明：結果頁面的額外組件與佈局
+   ═══════════════════════════════════════════ */
+.result-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.result-subtitle {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-top: 8px;
+  font-weight: 300;
+}
+
+.card-meta-right {
+  text-align: right;
+}
+
+.card-footer {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.card-footer-label {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.card-energy-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--border-subtle);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.card-energy-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.reflection-prompts {
+  margin-top: 48px;
+  padding: 32px;
+  background: var(--bg-panel);
+  border-radius: 24px;
+  border: 1px solid var(--border-subtle);
+}
+
+.reflection-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin: 0 0 16px;
+  font-family: "STSong", "Songti TC", "楷体", serif;
+}
+
+.reflection-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.reflection-list li {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  padding-left: 24px;
+  position: relative;
+}
+
+.reflection-list li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-size: 0.875rem;
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：歷史頁擴展樣式
+   說明：歷史頁面的額外組件與佈局
+   ═══════════════════════════════════════════ */
+.history-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.history-subtitle {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-top: 8px;
+  font-weight: 300;
+}
+
+.history-meta {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.history-meta-right {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.history-name {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--text-main);
+  font-family: "STSong", "Songti TC", "楷体", serif;
+}
+
+.history-suit,
+.history-key,
+.history-time {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.history-meaning {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  font-style: italic;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 24px;
+  opacity: 0.3;
+  color: var(--primary);
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：功能卡片
+   說明：首頁的功能/features 卡片
+   ═══════════════════════════════════════════ */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 64px;
+}
+
+.feature-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  padding: 32px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-soft);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+
+.feature-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin: 0 0 8px;
+  font-family: "STSong", "Songti TC", "楷体", serif;
+}
+
+.feature-card p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：按鈕大小變體
+   說明：提供不同尺寸的按鈕選擇
+   ═══════════════════════════════════════════ */
+.btn-lg {
+  padding: 16px 36px;
+  font-size: 1.125rem;
+}
+
+.btn-sm {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+}
+
+/* ═══════════════════════════════════════════
+   💡 概念：響應式 - 調整結果頁與歷史頁
+   ═══════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .result-header,
+  .history-header {
+    margin-bottom: 32px;
+  }
+
+  .card {
+    padding: 24px 16px;
+  }
+
+  .card-meaning {
+    font-size: 1rem;
+  }
+
+  .reflection-prompts {
+    padding: 24px 16px;
+    margin-top: 32px;
+  }
+
+  .reflection-title {
+    font-size: 1rem;
+  }
+
+  .reflection-list li {
+    font-size: 0.95rem;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .feature-card {
+    padding: 24px 16px;
+  }
+
+  .history-meta-right {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

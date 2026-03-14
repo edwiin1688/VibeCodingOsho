@@ -4,29 +4,37 @@
 
 {% block content %}
   <section class="history" aria-labelledby="history-title">
-    <h1 id="history-title">歷史記錄</h1>
+    <div class="history-header">
+      <h1 id="history-title">歷史記錄</h1>
+      <p class="history-subtitle">你的靈性成長歷程</p>
+    </div>
+
     {% if history %}
       <ul class="history-list" role="list" aria-label="抽卡歷史記錄">
         {% for item in history %}
           <li class="history-item" role="listitem">
-            <div class="meta">
-              <span class="name">{{ item.name }}</span>
-              {% if item.suit %}<span class="suit">{{ item.suit }}</span>{% endif %}
-              {% if item.key %}<span class="key">{{ item.key }}</span>{% endif %}
+            <div class="history-meta">
+              <span class="history-name">{{ item.name }}</span>
+              <div class="history-meta-right">
+                {% if item.suit %}<span class="history-suit">{{ item.suit }}</span>{% endif %}
+                {% if item.key %}<span class="history-key">{{ item.key }}</span>{% endif %}
+              </div>
+              <span class="history-time">{{ item.time }}</span>
             </div>
-            <div class="time">{{ item.time }}</div>
-            <div class="meaning">{{ item.meaning }}</div>
+            <div class="history-meaning">{{ item.meaning }}</div>
           </li>
         {% endfor %}
       </ul>
     {% else %}
-      <p aria-live="polite">目前尚無歷史記錄。</p>
+      <div class="empty-state" aria-live="polite">
+        <div class="empty-icon">✦</div>
+        <p>目前尚無歷史記錄</p>
+        <a class="btn btn-primary" href="{{ url_for('index') }}">開始第一次抽卡</a>
+      </div>
     {% endif %}
 
     <div class="actions">
-      <a class="btn" href="{{ url_for('index') }}">返回首頁</a>
+      <a class="btn btn-primary" href="{{ url_for('index') }}">返回首頁</a>
     </div>
   </section>
 {% endblock %}
-
-

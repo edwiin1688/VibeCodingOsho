@@ -5,21 +5,38 @@
 {% block content %}
   <section class="hero" aria-labelledby="hero-title">
     <h1 id="hero-title">奧修禪卡線上占卜</h1>
-    <p>在當下，讓卡牌映照你的內在狀態，帶來清明與指引。</p>
+    <p>在當下，讓卡牌映照你的內在狀態，帶來清明與指引。<br>深呼吸，與內在智慧連結。</p>
     <form action="{{ url_for('draw') }}" method="post" aria-label="抽卡表單">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-      <button class="btn btn-primary" type="submit" aria-label="開始抽卡">開始抽卡</button>
+      <button class="btn btn-primary btn-lg" type="submit" aria-label="開始抽卡">開始抽卡</button>
     </form>
   </section>
 
   <section class="intro" aria-labelledby="intro-title">
     <h2 id="intro-title">如何使用</h2>
     <ol>
-      <li>深呼吸，輕輕將注意力帶回此刻。</li>
-      <li>按下「開始抽卡」。</li>
-      <li>閱讀卡牌訊息，觀照內心的回應。</li>
+      <li><strong>深呼吸</strong>，輕輕將注意力帶回此刻</li>
+      <li><strong>專注意念</strong>：心中默念你的問題或所需指引</li>
+      <li><strong>按下抽卡</strong>：讓卡牌映照你的內在狀態</li>
+      <li><strong>靜心閱讀</strong>：觀照卡牌訊息與內心的回應</li>
     </ol>
   </section>
+
+  <section class="features" aria-label="Card Features">
+    <div class="feature-card">
+      <div class="feature-icon">✨</div>
+      <h3>即時連接</h3>
+      <p>隨時隨地，與內在智慧保持連接</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧘</div>
+      <h3>正念引導</h3>
+      <p>依照奧修禪卡的正念原則進行</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📜</div>
+      <h3>歷史記錄</h3>
+      <p>追蹤你的靈性成長歷程</p>
+    </div>
+  </section>
 {% endblock %}
-
-

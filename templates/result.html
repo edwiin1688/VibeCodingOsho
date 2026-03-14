@@ -3,29 +3,48 @@
 {% block title %}抽卡結果 · 奧修禪卡{% endblock %}
 
 {% block content %}
-  <section class="result" aria-labelledby="result-title">
-    <h1 id="result-title">抽卡結果</h1>
-    <div class="card" role="article" aria-label="抽到的卡牌">
+  <section class="result" aria-labelledby="result-title" aria-live="polite">
+    <div class="result-header">
+      <h1 id="result-title">抽卡結果</h1>
+      <p class="result-subtitle">這是來自內在的訊息</p>
+    </div>
+
+    <div class="card animated-float" role="article" aria-label="抽到的卡牌">
       <div class="card-meta">
         <div class="card-name">{{ result.name }}</div>
-        {% if result.suit %}<div class="card-suit">{{ result.suit }}</div>{% endif %}
-        {% if result.key %}<div class="card-key">{{ result.key }}</div>{% endif %}
+        <div class="card-meta-right">
+          {% if result.suit %}<div class="card-suit">{{ result.suit }}</div>{% endif %}
+          {% if result.key %}<div class="card-key">{{ result.key }}</div>{% endif %}
+        </div>
         <div class="card-time">{{ result.time }}</div>
       </div>
       <div class="card-meaning">
         <p>{{ result.meaning }}</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-footer-label">卡牌能量</span>
+        <div class="card-energy-bar">
+          <div class="card-energy-fill" style="width: 80%"></div>
+        </div>
       </div>
     </div>
 
     <div class="actions" role="group" aria-label="操作按鈕">
       <form action="{{ url_for('draw') }}" method="post">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        <button class="btn" type="submit">再抽一張</button>
+        <button class="btn btn-primary" type="submit" aria-label="再抽一張">再抽一張</button>
       </form>
-      <a class="btn btn-secondary" href="{{ url_for('history') }}">查看歷史</a>
-      <a class="btn btn-link" href="{{ url_for('index') }}">返回首頁</a>
+      <a class="btn btn-secondary" href="{{ url_for('history') }}" aria-label="查看歷史記錄">查看歷史</a>
+      <a class="btn btn-link" href="{{ url_for('index') }}" aria-label="返回首頁">返回首頁</a>
+    </div>
+
+    <div class="reflection-prompts">
+      <p class="reflection-title">靜心反思</p>
+      <ul class="reflection-list">
+        <li>這張卡牌的哪些訊息引起你的共鳴？</li>
+        <li>你感受到什麼情緒或身體反應？</li>
+        <li>這份指引該如何應用於你當下的處境？</li>
+      </ul>
     </div>
   </section>
 {% endblock %}
-
-

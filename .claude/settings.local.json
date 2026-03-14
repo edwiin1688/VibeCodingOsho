@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /d D:\\\\github\\\\chiisen\\\\VibeCodingOsho && set -a && source .env && python app.py)",
+      "Bash(netstat -ano | findstr :5000)",
+      "Bash(taskkill /F /PID 8396)",
+      "Bash(taskkill //F //PID 8396)",
+      "Bash(taskkill //F //IM python.exe)",
+      "Bash(timeout /t 3 && netstat -ano | findstr :5000)",
+      "Bash(sleep 3 && netstat -ano | findstr :5000)",
+      "Bash(curl -s -o nul -w \"%{http_code}\" http://127.0.0.1:5000)",
+      "Bash(curl -s http://127.0.0.1:5000)",
+      "Bash(cd \"D:/github/chiisen/VibeCodingOsho\" && python -c \"from app import create_app; app = create_app\\(\\); app.testing = True; client = app.test_client\\(\\); response = client.get\\('/'\\); print\\('Status:', response.status_code\\); print\\('Length:', len\\(response.data\\)\\)\")",
+      "Bash(cd \"D:/github/chiisen/VibeCodingOsho\" && python -c \"import-dotenv; from app import create_app; app = create_app\\(\\); print\\('Success'\\)\")",
+      "Bash(cd \"D:/github/chiisen/VibeCodingOsho\" && python -c \"from dotenv import load_dotenv; load_dotenv\\(\\); from app import create_app; app = create_app\\(\\); print\\('Success'\\)\")",
+      "Bash(pip install:*)",
+      "Bash(cd \"D:/github/chiisen/VibeCodingOsho\" && python app.py)",
+      "Bash(cd \"D:/github/chiisen/VibeCodingOsho\" && python test_run.py 2>&1)",
+      "Bash(curl -s -o nul -w \"%{http_code}\" http://127.0.0.1:5000/static/css/styles.css)"
+    ]
+  }
+}
